@@ -3,7 +3,7 @@ import { AddressEntity } from './address.entity';
 import { StaffEntity } from './staff.entity';
 import { UserEntity } from './user.entity';
 import { RestaurantEntity } from './restaurant.entity';
-import { ProductEntity } from './product.entity';
+import { OrderProductEntity } from './order-product.entity';
 
 export const OrderTypeEnum = {
     DINEIN: 'DINEIN', // В ресторане
@@ -21,9 +21,6 @@ export const OrderStatusEnum = {
 };
 
 export class OrderEntity {
-    get products(): ProductEntity[] {
-        return this._products;
-    }
     constructor(
         private _id: number,
         private _cashier: StaffEntity,
@@ -31,9 +28,8 @@ export class OrderEntity {
         private _order_time: Date,
         private _order_status: typeof OrderStatusEnum,
         private _order_type: typeof OrderTypeEnum,
-        private _order_price: number, // TODO: сделать Money,
-        private _products: ProductEntity[],
-        private _customer: Nullable<UserEntity>,
+        private _orderProducts: OrderProductEntity[],
+        private _user: Nullable<UserEntity>,
         private _courier: Nullable<StaffEntity>,
         private _delivery_address: AddressEntity,
         private _delivery_price: Nullable<number>,
@@ -66,11 +62,11 @@ export class OrderEntity {
     }
 
     get order_price(): number {
-        return this._order_price;
+        return this.calculateOrderPrice();
     }
 
-    get customer(): Nullable<UserEntity> {
-        return this._customer;
+    get user(): Nullable<UserEntity> {
+        return this._user;
     }
 
     get courier(): Nullable<StaffEntity> {
@@ -91,5 +87,13 @@ export class OrderEntity {
 
     get delivery_actual_time(): Nullable<Date> {
         return this._delivery_actual_time;
+    }
+
+    private calculateOrderPrice() {
+        return this._orderProducts.reduce(
+            (acc: number, orderProduct: OrderProductEntity): number =>
+                acc + orderProduct.product.price * orderProduct.quantity,
+            0,
+        );
     }
 }

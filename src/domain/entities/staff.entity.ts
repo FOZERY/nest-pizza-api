@@ -1,12 +1,13 @@
 import { RestaurantEntity } from './restaurant.entity';
 import { StaffPositionEntity } from './staff-position.entity';
+import { FullNameVo } from '../value-objects/full-name.vo';
+import { PhoneNumberVo } from '../value-objects/phone-number.vo';
 
 export class StaffEntity {
     constructor(
         private readonly _id: number,
-        private readonly _firstName: string,
-        private readonly _lastName: string,
-        private readonly _phoneNumber: string,
+        private readonly _fullName: FullNameVo,
+        private readonly _phoneNumber: PhoneNumberVo,
         private readonly _restaurant: RestaurantEntity,
         private readonly _staffPosition: StaffPositionEntity,
     ) {}
@@ -15,15 +16,7 @@ export class StaffEntity {
         return this._id;
     }
 
-    get firstName(): string {
-        return this._firstName;
-    }
-
-    get lastName(): string {
-        return this._lastName;
-    }
-
-    get phoneNumber(): string {
+    get phoneNumber(): PhoneNumberVo {
         return this._phoneNumber;
     }
 
@@ -33,5 +26,9 @@ export class StaffEntity {
 
     get staffPosition(): StaffPositionEntity {
         return this._staffPosition;
+    }
+
+    get fullName(): FullNameVo {
+        return this._fullName;
     }
 }

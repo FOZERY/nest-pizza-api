@@ -2,6 +2,7 @@ import { AddressEntity } from './address.entity';
 import { OrderEntity } from './order.entity';
 import { ProductEntity } from './product.entity';
 import { StaffEntity } from './staff.entity';
+import { PhoneNumberVo } from '../value-objects/phone-number.vo';
 
 export class RestaurantEntity {
     constructor(
@@ -9,7 +10,7 @@ export class RestaurantEntity {
         private readonly _address: AddressEntity,
         private readonly _openingTime: Date,
         private readonly _closingTime: Date,
-        private readonly _phoneNumber: string,
+        private readonly _phoneNumber: PhoneNumberVo,
         private readonly _staff: StaffEntity[],
         private readonly _orders: OrderEntity[],
         private readonly _products: ProductEntity[],
@@ -31,7 +32,7 @@ export class RestaurantEntity {
         return this._closingTime;
     }
 
-    get phoneNumber(): string {
+    get phoneNumber(): PhoneNumberVo {
         return this._phoneNumber;
     }
 

@@ -1,11 +1,12 @@
 import { AddressEntity } from './address.entity';
 import { Optional } from '../common/common.types';
+import { PhoneNumberVo } from '../value-objects/phone-number.vo';
 
 export class UserEntity {
     constructor(
         private _id: number,
         private _firstName: string,
-        private _phone: string,
+        private _phoneNumber: PhoneNumberVo,
         private _addresses?: Optional<AddressEntity[]>,
         private _email?: Optional<string>,
     ) {}
@@ -18,8 +19,8 @@ export class UserEntity {
         return this._firstName;
     }
 
-    get phone(): string {
-        return this._phone;
+    get phoneNumber(): PhoneNumberVo {
+        return this._phoneNumber;
     }
 
     get addresses(): Optional<AddressEntity[]> {
