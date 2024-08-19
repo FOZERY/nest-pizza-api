@@ -26,6 +26,9 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
+<a href="https://lucid.app/lucidchart/4742132d-0a97-413e-8316-a3e1878349f8/edit?viewport_loc=1378%2C-982%2C2676%2C3788%2C0_0&invitationId=inv_4701c30b-f2ed-48fd-9e41-eb1d2fa4804e"></a>
+
+
 ## Installation
 
 ```bash
