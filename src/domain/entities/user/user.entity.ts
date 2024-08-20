@@ -1,6 +1,6 @@
-import { AddressEntity } from './address.entity';
-import { Optional } from '../common/common.types';
-import { PhoneNumberVo } from '../value-objects/phone-number.vo';
+import { AddressEntity } from '../address/address.entity';
+import { Optional } from '../../common/common.types';
+import { PhoneNumberVo } from '../../value-objects/phone-number.vo';
 
 export class UserEntity {
     constructor(

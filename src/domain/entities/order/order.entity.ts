@@ -1,9 +1,9 @@
-import { Nullable } from '../common/common.types';
-import { AddressEntity } from './address.entity';
-import { StaffEntity } from './staff.entity';
-import { UserEntity } from './user.entity';
-import { RestaurantEntity } from './restaurant.entity';
-import { OrderProductEntity } from './order-product.entity';
+import { Nullable } from '../../common/common.types';
+import { AddressEntity } from '../address/address.entity';
+import { StaffEntity } from '../staff/staff.entity';
+import { UserEntity } from '../user/user.entity';
+import { RestaurantEntity } from '../restaurant/restaurant.entity';
+import { OrderProductEntity } from '../order-product/order-product.entity';
 
 export const OrderTypeEnum = {
     DINEIN: 'DINEIN', // В ресторане

@@ -1,7 +1,7 @@
-import { RestaurantEntity } from './restaurant.entity';
-import { StaffPositionEntity } from './staff-position.entity';
-import { FullNameVo } from '../value-objects/full-name.vo';
-import { PhoneNumberVo } from '../value-objects/phone-number.vo';
+import { RestaurantEntity } from '../restaurant/restaurant.entity';
+import { StaffPositionEntity } from '../staff-position/staff-position.entity';
+import { FullNameVo } from '../../value-objects/full-name.vo';
+import { PhoneNumberVo } from '../../value-objects/phone-number.vo';
 
 export class StaffEntity {
     constructor(

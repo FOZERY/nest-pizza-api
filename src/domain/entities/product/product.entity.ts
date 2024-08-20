@@ -1,4 +1,4 @@
-import { Optional } from '../common/common.types';
+import { Optional } from '../../common/common.types';
 
 export const ProductTypeEnum = {
     PIZZA: 'PIZZA',

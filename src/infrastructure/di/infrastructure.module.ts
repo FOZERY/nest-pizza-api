@@ -1,22 +1,10 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import * as process from 'node:process';
+import { typeOrmConfigAsync } from '../database/typeorm/config/typeorm.config';
 
 @Module({
     providers: [],
     controllers: [],
-    imports: [
-        TypeOrmModule.forRoot({
-            type: 'postgres',
-            host: process.env.POSTGRES_HOST,
-            port: Number(process.env.POSTGRES_PORT),
-            username: process.env.POSTGRES_USERNAME,
-            password: process.env.POSTGRES_PASSWORD,
-            database: process.env.POSTGRES_DB,
-            entities: [],
-            synchronize: true,
-            autoLoadEntities: true,
-        }),
-    ],
+    imports: [TypeOrmModule.forRootAsync(typeOrmConfigAsync)],
 })
 export class InfrastructureModule {}

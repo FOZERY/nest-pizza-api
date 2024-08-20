@@ -6,8 +6,10 @@ import { InfrastructureModule } from './infrastructure.module';
     imports: [
         ConfigModule.forRoot({
             envFilePath: `./env/.${process.env.NODE_ENV}.env`,
+            isGlobal: true,
         }),
         InfrastructureModule,
     ],
+    exports: [],
 })
 export class RootModule {}

@@ -1,8 +1,8 @@
-import { AddressEntity } from './address.entity';
-import { OrderEntity } from './order.entity';
-import { ProductEntity } from './product.entity';
-import { StaffEntity } from './staff.entity';
-import { PhoneNumberVo } from '../value-objects/phone-number.vo';
+import { AddressEntity } from '../address/address.entity';
+import { OrderEntity } from '../order/order.entity';
+import { ProductEntity } from '../product/product.entity';
+import { StaffEntity } from '../staff/staff.entity';
+import { PhoneNumberVo } from '../../value-objects/phone-number.vo';
 
 export class RestaurantEntity {
     constructor(

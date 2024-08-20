@@ -1,13 +1,28 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+    Column,
+    CreateDateColumn,
+    Entity,
+    ManyToOne,
+    OneToMany,
+    PrimaryGeneratedColumn,
+    UpdateDateColumn,
+} from 'typeorm';
 import { UserTypeormEntity } from './user.typeorm-entity';
 
-@Entity()
+import { AddressTypeormEntity } from './address.typeorm-entity';
+import { StaffTypeormEntity } from './staff.typeorm-entity';
+import { OrderProductTypeormEntity } from './order-product.typeorm-entity';
+import {
+    OrderStatusEnum,
+    OrderTypeEnum,
+} from 'src/domain/entities/order/order.entity';
+import { OrderStatusTypeormEntity } from './order-status.typeorm-entity';
+import { OrderTypeTypeormEntity } from './order-type.typeorm-entity';
+
+@Entity('orders')
 export class OrderTypeormEntity {
     @PrimaryGeneratedColumn()
     id: number;
-
-    @Column()
-    restaurant_id: number;
 
     @Column()
     order_time: Date;
@@ -15,15 +30,59 @@ export class OrderTypeormEntity {
     @Column()
     order_price: number;
 
-    @Column()
-    delivery_price: number;
+    @ManyToOne(
+        () => OrderStatusTypeormEntity,
+        (orderStatus) => orderStatus.orders,
+    )
+    order_status: OrderStatusTypeormEntity;
 
-    @Column()
-    delivery_requested_time: number;
+    @ManyToOne(() => OrderTypeTypeormEntity, (orderType) => orderType.orders)
+    order_type: OrderTypeTypeormEntity;
 
-    @Column()
-    delivery_actual_time: number;
+    @Column({
+        nullable: true,
+    })
+    delivery_requested_time?: Date;
 
-    @ManyToOne(() => UserTypeormEntity, (user) => user.orders)
-    user: UserTypeormEntity;
+    @Column({
+        nullable: true,
+    })
+    delivery_actual_time?: Date;
+
+    @Column({
+        nullable: true,
+    })
+    delivery_price?: number;
+
+    @ManyToOne(() => AddressTypeormEntity, (address) => address.orders, {
+        nullable: true,
+    })
+    delivery_address?: AddressTypeormEntity;
+
+    @ManyToOne(() => UserTypeormEntity, (user) => user.orders, {
+        nullable: true,
+    })
+    user?: UserTypeormEntity;
+
+    @ManyToOne(() => StaffTypeormEntity, (staff) => staff.cashierOrders, {
+        nullable: true,
+    })
+    cashier?: StaffTypeormEntity;
+
+    @ManyToOne(() => StaffTypeormEntity, (staff) => staff.courierOrders, {
+        nullable: true,
+    })
+    courier?: StaffTypeormEntity;
+
+    @OneToMany(
+        () => OrderProductTypeormEntity,
+        (orderProduct) => orderProduct.order,
+    )
+    orderProducts: OrderProductTypeormEntity[];
+
+    @CreateDateColumn()
+    createdAt: Date;
+
+    @UpdateDateColumn()
+    updatedAt: Date;
 }

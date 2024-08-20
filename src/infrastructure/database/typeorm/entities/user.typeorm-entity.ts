@@ -1,26 +1,29 @@
 import {
     Column,
+    CreateDateColumn,
     Entity,
     JoinTable,
     ManyToMany,
     OneToMany,
     PrimaryGeneratedColumn,
+    UpdateDateColumn,
 } from 'typeorm';
 import { AddressTypeormEntity } from './address.typeorm-entity';
 import { OrderTypeormEntity } from './order.typeorm-entity';
 
-@Entity()
+@Entity('users')
 export class UserTypeormEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
     @Column({
         length: 11,
+        unique: true,
     })
     phone_number: string;
 
     @Column()
-    name: string;
+    firstName: string;
 
     @Column({
         nullable: true,
@@ -33,4 +36,10 @@ export class UserTypeormEntity {
 
     @OneToMany(() => OrderTypeormEntity, (order) => order.user)
     orders: OrderTypeormEntity[];
+
+    @CreateDateColumn()
+    createdAt: Date;
+
+    @UpdateDateColumn()
+    updatedAt: Date;
 }
