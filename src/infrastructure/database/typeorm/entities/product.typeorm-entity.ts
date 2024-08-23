@@ -10,6 +10,7 @@ import {
 import { RestaurantProductTypeormEntity } from './restaurant-product.typeorm-entity';
 import { OrderProductTypeormEntity } from './order-product.typeorm-entity';
 import { ProductTypeTypeormEntity } from './product-type.typeorm-entity';
+import { ProductIngredientsTypeormEntity } from './product-ingredients.typeorm-entity';
 
 @Entity('products')
 export class ProductTypeormEntity {
@@ -54,6 +55,12 @@ export class ProductTypeormEntity {
         (orderProduct) => orderProduct.product,
     )
     orderProducts: OrderProductTypeormEntity[];
+
+    @OneToMany(
+        () => ProductIngredientsTypeormEntity,
+        (productIngredient) => productIngredient.product,
+    )
+    productIngredient: ProductIngredientsTypeormEntity[];
 
     @CreateDateColumn()
     createdAt: Date;

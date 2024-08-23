@@ -2,7 +2,6 @@ import {
     Column,
     CreateDateColumn,
     Entity,
-    ManyToMany,
     ManyToOne,
     OneToMany,
     PrimaryGeneratedColumn,
@@ -11,6 +10,7 @@ import {
 import { StaffTypeormEntity } from './staff.typeorm-entity';
 import { AddressTypeormEntity } from './address.typeorm-entity';
 import { RestaurantProductTypeormEntity } from './restaurant-product.typeorm-entity';
+import { InventoryTypeormEntity } from './inventory.typeorm-entity';
 
 @Entity('restaurants')
 export class RestaurantTypeormEntity {
@@ -41,6 +41,12 @@ export class RestaurantTypeormEntity {
         (restaurantsProducts) => restaurantsProducts.restaurant,
     )
     restaurantsProducts: RestaurantProductTypeormEntity[];
+
+    @OneToMany(
+        () => InventoryTypeormEntity,
+        (inventory) => inventory.restaurant,
+    )
+    inventories: InventoryTypeormEntity[];
 
     @CreateDateColumn()
     createdAt: Date;

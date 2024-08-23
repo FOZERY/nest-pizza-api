@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class InitializeDB1724101300049 implements MigrationInterface {
+export class InitializeWithDefaults1724447732499 implements MigrationInterface {
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`
             INSERT INTO "product-types"(value) VALUES ('PIZZA'), ('DRINK'), ('SNACK'), ('DESERT'), ('ROLL');
