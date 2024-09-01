@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class InitializeWithDefaults1724447732499 implements MigrationInterface {
+export class $npmConfigName1724485552774 implements MigrationInterface {
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`
             INSERT INTO "product-types"(value) VALUES ('PIZZA'), ('DRINK'), ('SNACK'), ('DESERT'), ('ROLL');
@@ -23,6 +23,10 @@ export class InitializeWithDefaults1724447732499 implements MigrationInterface {
         await queryRunner.query(`
             INSERT INTO "staff-positions"(value) VALUES ('CASHIER'), ('COURIER'), ('MANAGER');
         `);
+
+        await queryRunner.query(
+            `INSERT INTO "staff-roles" (value) VALUES ('ADMIN'), ('MANAGER'), ('CASHIER'), ('COURIER');`,
+        );
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
@@ -38,6 +42,9 @@ export class InitializeWithDefaults1724447732499 implements MigrationInterface {
         await queryRunner.query(
             `DELETE FROM "staff-positions" WHERE value IN ('CASHIER', 'COURIER', 'MANAGER');`,
         );
+        await queryRunner.query(
+            `DELETE FROM "staff-roles" WHERE value IN ('ADMIN', 'MANAGER', 'CASHIER', 'COURIER');`,
+        );
 
         await queryRunner.query(
             `ALTER SEQUENCE "product-types_id_seq" RESTART WITH 1;`,
@@ -51,5 +58,7 @@ export class InitializeWithDefaults1724447732499 implements MigrationInterface {
         await queryRunner.query(
             `ALTER SEQUENCE "staff-positions_id_seq" RESTART WITH 1;`,
         );
+
+        await queryRunner.query(`ALTER SEQUENCE "staff-roles" RESTART WITH 1;`);
     }
 }

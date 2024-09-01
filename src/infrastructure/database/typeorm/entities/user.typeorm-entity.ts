@@ -31,7 +31,7 @@ export class UserTypeormEntity {
     email?: string;
 
     @ManyToMany(() => AddressTypeormEntity)
-    @JoinTable()
+    @JoinTable({ name: 'users_addresses' })
     addresses: AddressTypeormEntity[];
 
     @OneToMany(() => OrderTypeormEntity, (order) => order.user)

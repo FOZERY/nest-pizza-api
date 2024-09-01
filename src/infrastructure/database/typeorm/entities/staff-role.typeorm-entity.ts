@@ -24,6 +24,6 @@ export class StaffRoleTypeormEntity {
     staff: StaffTypeormEntity[];
 
     @ManyToMany(() => PermissionTypeormEntity)
-    @JoinTable()
+    @JoinTable({ name: 'staff_roles_permissions' })
     permissions: PermissionTypeormEntity[];
 }
