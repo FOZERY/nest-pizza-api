@@ -1,12 +1,12 @@
-import { OrderTypeEnum } from '../../../domain/entities/order/order.entity';
 import { Optional } from '../../../domain/common/common.types';
 import { AddressEntity } from '../../../domain/entities/address/address.entity';
 import { CreateOrderProductDto } from '../order-product/create-order-product.dto';
+import { OrderTypeEntity } from '../../../domain/entities/order-type/order-type.entity';
 
 export class CreateOrderDto {
     readonly restaurantId: number;
 
-    readonly orderType: typeof OrderTypeEnum;
+    readonly orderType: OrderTypeEntity;
 
     readonly products: CreateOrderProductDto[];
 

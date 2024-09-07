@@ -1,14 +1,9 @@
-import { BaseEntity } from '../../common/entity/Base.entity';
 import { Nullable } from '../../common/common.types';
+import { BaseEntity } from '../../common/entity/Base.entity';
 
-export const StaffPositionEnum = {
-    MANAGER: 'MANAGER',
-    COURIER: 'COURIER',
-    CASHIER: 'CASHIER',
-    COOK: 'COOK',
-} as const;
+export const PermissionsEnum = {} as const;
 
-export class StaffPositionEntity extends BaseEntity<number> {
+export class PermissionEntity extends BaseEntity<number> {
     private _value: string;
     private _description: Nullable<string>;
 
@@ -16,6 +11,7 @@ export class StaffPositionEntity extends BaseEntity<number> {
         super(id);
 
         this._value = value;
+
         this._description = description || null;
     }
 }

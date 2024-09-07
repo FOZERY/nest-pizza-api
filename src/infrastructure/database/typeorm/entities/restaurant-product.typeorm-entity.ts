@@ -11,7 +11,10 @@ export class RestaurantProductTypeormEntity {
     restaurantId: number;
 
     @Column()
-    quantity: number;
+    availability: boolean;
+
+    @Column()
+    custom_price: number;
 
     @ManyToOne(
         () => ProductTypeormEntity,

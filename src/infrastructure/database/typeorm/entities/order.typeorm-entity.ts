@@ -12,12 +12,10 @@ import { UserTypeormEntity } from './user.typeorm-entity';
 import { AddressTypeormEntity } from './address.typeorm-entity';
 import { StaffTypeormEntity } from './staff.typeorm-entity';
 import { OrderProductTypeormEntity } from './order-product.typeorm-entity';
-import {
-    OrderStatusEnum,
-    OrderTypeEnum,
-} from 'src/domain/entities/order/order.entity';
 import { OrderStatusTypeormEntity } from './order-status.typeorm-entity';
 import { OrderTypeTypeormEntity } from './order-type.typeorm-entity';
+import { RestaurantTypeormEntity } from './restaurant.typeorm-entity';
+import { Nullable } from '../../../../domain/common/common.types';
 
 @Entity('orders')
 export class OrderTypeormEntity {
@@ -42,37 +40,40 @@ export class OrderTypeormEntity {
     @Column({
         nullable: true,
     })
-    delivery_requested_time?: Date;
+    delivery_requested_time: Date;
 
     @Column({
         nullable: true,
     })
-    delivery_actual_time?: Date;
+    delivery_actual_time: Date;
 
     @Column({
         nullable: true,
     })
-    delivery_price?: number;
+    delivery_price: number;
+
+    @ManyToOne(() => RestaurantTypeormEntity, (restaurant) => restaurant.orders)
+    restaurant: RestaurantTypeormEntity;
 
     @ManyToOne(() => AddressTypeormEntity, (address) => address.orders, {
         nullable: true,
     })
-    delivery_address?: AddressTypeormEntity;
+    delivery_address: AddressTypeormEntity;
 
     @ManyToOne(() => UserTypeormEntity, (user) => user.orders, {
         nullable: true,
     })
-    user?: UserTypeormEntity;
+    user: UserTypeormEntity;
 
     @ManyToOne(() => StaffTypeormEntity, (staff) => staff.cashierOrders, {
         nullable: true,
     })
-    cashier?: StaffTypeormEntity;
+    cashier: StaffTypeormEntity;
 
     @ManyToOne(() => StaffTypeormEntity, (staff) => staff.courierOrders, {
         nullable: true,
     })
-    courier?: StaffTypeormEntity;
+    courier: StaffTypeormEntity;
 
     @OneToMany(
         () => OrderProductTypeormEntity,

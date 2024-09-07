@@ -1,48 +1,25 @@
-import { AddressEntity } from '../address/address.entity';
-import { OrderEntity } from '../order/order.entity';
-import { ProductEntity } from '../product/product.entity';
-import { StaffEntity } from '../staff/staff.entity';
-import { PhoneNumberVo } from '../../value-objects/phone-number.vo';
+import { TIdentifier } from '../../common/common.types';
+import { BaseEntity } from '../../common/entity/Base.entity';
 
-export class RestaurantEntity {
+export class RestaurantEntity extends BaseEntity<number> {
+    private _addressId: TIdentifier;
+    private _openingTime: Date;
+    private _closingTime: Date;
+    private _phoneNumber: string;
+
     constructor(
-        private readonly _id: number,
-        private readonly _address: AddressEntity,
-        private readonly _openingTime: Date,
-        private readonly _closingTime: Date,
-        private readonly _phoneNumber: PhoneNumberVo,
-        private readonly _staff: StaffEntity[],
-        private readonly _orders: OrderEntity[],
-        private readonly _products: ProductEntity[],
-    ) {}
+        addressId: TIdentifier,
+        openingTime: Date,
+        closingTime: Date,
+        phoneNumber: string,
 
-    get id(): number {
-        return this._id;
-    }
+        id?: number,
+    ) {
+        super(id);
 
-    get address(): AddressEntity {
-        return this._address;
-    }
-
-    get openingTime(): Date {
-        return this._openingTime;
-    }
-
-    get closingTime(): Date {
-        return this._closingTime;
-    }
-
-    get phoneNumber(): PhoneNumberVo {
-        return this._phoneNumber;
-    }
-
-    get staff(): StaffEntity[] {
-        return this._staff;
-    }
-    get products(): ProductEntity[] {
-        return this._products;
-    }
-    get orders(): OrderEntity[] {
-        return this._orders;
+        this._addressId = addressId;
+        this._openingTime = openingTime;
+        this._closingTime = closingTime;
+        this._phoneNumber = phoneNumber;
     }
 }

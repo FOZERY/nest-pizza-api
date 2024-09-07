@@ -4,8 +4,9 @@ export class PhoneNumberVo {
     }
 
     private validate(): void {
+        console.log(this._phoneNumber);
         const phoneNumberRegex = /^(\+7\d{10}|8\d{10}|7\d{10})$/;
-        if (phoneNumberRegex.test(this._phoneNumber)) {
+        if (!phoneNumberRegex.test(this._phoneNumber)) {
             throw new Error(`Invalid phone number: ${this._phoneNumber}`);
         }
 

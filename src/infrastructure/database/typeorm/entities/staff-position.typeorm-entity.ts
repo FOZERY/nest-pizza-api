@@ -9,6 +9,9 @@ export class StaffPositionTypeormEntity {
     @Column()
     value: string;
 
+    @Column()
+    description: string;
+
     @OneToMany(() => StaffTypeormEntity, (staff) => staff.position)
     staff: StaffTypeormEntity[];
 }

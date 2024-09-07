@@ -1,14 +1,14 @@
-import { BaseEntity } from '../../common/entity/Base.entity';
 import { Nullable } from '../../common/common.types';
+import { BaseEntity } from '../../common/entity/Base.entity';
 
-export const StaffPositionEnum = {
+export const StaffRoleEnum = {
+    ADMIN: 'ADMIN',
     MANAGER: 'MANAGER',
-    COURIER: 'COURIER',
     CASHIER: 'CASHIER',
-    COOK: 'COOK',
+    COURIER: 'COURIER',
 } as const;
 
-export class StaffPositionEntity extends BaseEntity<number> {
+export class StaffRoleEntity extends BaseEntity<number> {
     private _value: string;
     private _description: Nullable<string>;
 

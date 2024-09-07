@@ -1,16 +1,16 @@
 import { TIdentifier } from '../../common/common.types';
 
-export class OrderProductEntity {
-    private _orderId: TIdentifier;
+export class ProductIngredientEntity {
+    private _ingredientId: TIdentifier;
     private _productId: TIdentifier;
     private _quantity: number;
 
     constructor(
-        orderId: TIdentifier,
+        ingredientId: TIdentifier,
         productId: TIdentifier,
         quantity: number,
     ) {
-        this._orderId = orderId;
+        this._ingredientId = ingredientId;
         this._productId = productId;
         this._quantity = quantity;
     }

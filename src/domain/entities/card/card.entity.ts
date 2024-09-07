@@ -1,36 +1,27 @@
 import { UserEntity } from '../user/user.entity';
+import { BaseEntity } from '../../common/entity/Base.entity';
 
-export class CardEntity {
+export class CardEntity extends BaseEntity<number> {
+    private _userId: UserEntity;
+    private _cardNumber: string;
+    private _cardExpiry: Date;
+    private _cardHolderName: string;
+    private _cardType: string;
+
     constructor(
-        private readonly _id: number,
-        private readonly _user: UserEntity,
-        private readonly _cardNumber: string,
-        private readonly _cardExpiry: Date,
-        private readonly _cardHolderName: string,
-        private readonly _cardType: string,
-    ) {}
+        userId: UserEntity,
+        cardNumber: string,
+        cardExpiry: Date,
+        cardHolderName: string,
+        cardType: string,
+        id?: number,
+    ) {
+        super(id);
 
-    get id(): number {
-        return this._id;
-    }
-
-    get user(): UserEntity {
-        return this._user;
-    }
-
-    get cardNumber(): string {
-        return this._cardNumber;
-    }
-
-    get cardExpiry(): Date {
-        return this._cardExpiry;
-    }
-
-    get cardHolderName(): string {
-        return this._cardHolderName;
-    }
-
-    get cardType(): string {
-        return this._cardType;
+        this._userId = userId;
+        this._cardNumber = cardNumber;
+        this._cardExpiry = cardExpiry;
+        this._cardHolderName = cardHolderName;
+        this._cardType = cardType;
     }
 }

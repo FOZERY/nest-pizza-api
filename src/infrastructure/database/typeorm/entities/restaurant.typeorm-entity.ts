@@ -11,6 +11,7 @@ import { StaffTypeormEntity } from './staff.typeorm-entity';
 import { AddressTypeormEntity } from './address.typeorm-entity';
 import { RestaurantProductTypeormEntity } from './restaurant-product.typeorm-entity';
 import { InventoryTypeormEntity } from './inventory.typeorm-entity';
+import { OrderTypeormEntity } from './order.typeorm-entity';
 
 @Entity('restaurants')
 export class RestaurantTypeormEntity {
@@ -34,7 +35,7 @@ export class RestaurantTypeormEntity {
     @OneToMany(() => StaffTypeormEntity, (staff) => staff.restaurant, {
         nullable: true,
     })
-    staff?: StaffTypeormEntity[];
+    staff: StaffTypeormEntity[];
 
     @OneToMany(
         () => RestaurantProductTypeormEntity,
@@ -47,6 +48,9 @@ export class RestaurantTypeormEntity {
         (inventory) => inventory.restaurant,
     )
     inventories: InventoryTypeormEntity[];
+
+    @OneToMany(() => OrderTypeormEntity, (order) => order.restaurant)
+    orders: OrderTypeormEntity[];
 
     @CreateDateColumn()
     createdAt: Date;
