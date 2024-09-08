@@ -1,10 +1,11 @@
-import { TIdentifier } from '../../common/common.types';
+import { PermissionEntityId } from '../permission/permission.entity';
+import { StaffRoleEntityId } from '../staff-role/staff-role.entity';
 
 export class RolePermissionEntity {
-    private _roleId: TIdentifier;
-    private _permissionId: TIdentifier;
+    private _roleId: StaffRoleEntityId;
+    private _permissionId: PermissionEntityId;
 
-    constructor(roleId: TIdentifier, permissionId: TIdentifier) {
+    constructor(roleId: StaffRoleEntityId, permissionId: PermissionEntityId) {
         this._roleId = roleId;
         this._permissionId = permissionId;
     }

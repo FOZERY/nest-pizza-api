@@ -1,10 +1,12 @@
 import { BaseEntity } from '../../common/entity/Base.entity';
 
-export class IngredientEntity extends BaseEntity<number> {
+export type IngredientEntityId = number;
+
+export class IngredientEntity extends BaseEntity<IngredientEntityId> {
     private _name: string;
     private _unit: string;
 
-    constructor(name: string, unit: string, id?: number) {
+    constructor(name: string, unit: string, id?: IngredientEntityId) {
         super(id);
 
         this._name = name;

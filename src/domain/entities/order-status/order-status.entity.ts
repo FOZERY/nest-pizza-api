@@ -9,10 +9,12 @@ export const OrderStatusEnum = {
     CANCELLED: 'CANCELLED', // Заказ отменен
 } as const;
 
-export class OrderStatusEntity extends BaseEntity<number> {
+export type OrderStatusEntityId = number;
+
+export class OrderStatusEntity extends BaseEntity<OrderStatusEntityId> {
     private _value: string;
 
-    constructor(value: string, id?: number) {
+    constructor(value: string, id?: OrderStatusEntityId) {
         super(id);
         this._value = value;
     }

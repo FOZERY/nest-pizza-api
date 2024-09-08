@@ -8,11 +8,13 @@ export const StaffRoleEnum = {
     COURIER: 'COURIER',
 } as const;
 
-export class StaffRoleEntity extends BaseEntity<number> {
+export type StaffRoleEntityId = number;
+
+export class StaffRoleEntity extends BaseEntity<StaffRoleEntityId> {
     private _value: string;
     private _description: Nullable<string>;
 
-    constructor(value: string, description?: string, id?: number) {
+    constructor(value: string, description?: string, id?: StaffRoleEntityId) {
         super(id);
 
         this._value = value;

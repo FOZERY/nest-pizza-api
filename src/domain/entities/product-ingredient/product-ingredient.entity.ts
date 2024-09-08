@@ -1,13 +1,14 @@
-import { TIdentifier } from '../../common/common.types';
+import { IngredientEntityId } from '../ingredient/ingredient.entity';
+import { ProductEntityId } from '../product/product.entity';
 
 export class ProductIngredientEntity {
-    private _ingredientId: TIdentifier;
-    private _productId: TIdentifier;
+    private _ingredientId: IngredientEntityId;
+    private _productId: ProductEntityId;
     private _quantity: number;
 
     constructor(
-        ingredientId: TIdentifier,
-        productId: TIdentifier,
+        ingredientId: IngredientEntityId,
+        productId: ProductEntityId,
         quantity: number,
     ) {
         this._ingredientId = ingredientId;

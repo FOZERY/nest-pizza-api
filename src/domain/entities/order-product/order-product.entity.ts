@@ -1,12 +1,13 @@
 import { TIdentifier } from '../../common/common.types';
+import { OrderEntityId } from '../order/order.entity';
 
 export class OrderProductEntity {
-    private _orderId: TIdentifier;
+    private _orderId: OrderEntityId;
     private _productId: TIdentifier;
     private _quantity: number;
 
     constructor(
-        orderId: TIdentifier,
+        orderId: OrderEntityId,
         productId: TIdentifier,
         quantity: number,
     ) {

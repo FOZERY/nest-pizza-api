@@ -14,7 +14,7 @@ export default new DataSource({
     password: process.env.POSTGRES_PASSWORD,
     database: process.env.POSTGRES_DB,
     entities: [
-        'dist/infrastructure/database/typeorm/entities/*.typeorm-entity.js',
+        'dist/infrastructure/database/typeorm/entities/**/*.typeorm-entity.js',
     ],
     migrations: ['dist/infrastructure/database/typeorm/migrations/*.js'],
 });

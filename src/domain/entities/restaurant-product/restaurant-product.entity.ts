@@ -1,14 +1,15 @@
-import { TIdentifier } from '../../common/common.types';
+import { ProductEntityId } from '../product/product.entity';
+import { RestaurantEntityId } from '../restaurant/restaurant.entity';
 
 export class RestaurantProductEntity {
-    private _productId: TIdentifier;
-    private _restaurantId: TIdentifier;
+    private _productId: ProductEntityId;
+    private _restaurantId: RestaurantEntityId;
     private _availability: boolean;
     private _custom_price: number;
 
     constructor(
-        productId: TIdentifier,
-        restaurant: TIdentifier,
+        productId: ProductEntityId,
+        restaurant: RestaurantEntityId,
         availability: boolean,
         custom_price: number,
     ) {

@@ -1,8 +1,8 @@
+import { CreateStaffDto } from 'src/shared/dtos/staff/create-staff.dto';
 import { StaffEntity } from './staff.entity';
-import { Nullable } from '../../common/common.types';
 
-export abstract class IStaffRepository {
-    abstract createStaff(staff: StaffEntity): Promise<void>;
+export interface IStaffRepository {
+    findStaffByLogin(login: string): Promise<StaffEntity | null>;
 
-    abstract findStaffByLogin(login: string): Promise<Nullable<StaffEntity>>;
+    createStaff(createStaffDto: CreateStaffDto): Promise<StaffEntity | null>;
 }

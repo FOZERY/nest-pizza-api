@@ -1,19 +1,21 @@
-import { TIdentifier } from '../../common/common.types';
 import { BaseEntity } from '../../common/entity/Base.entity';
+import { AddressEntityId } from '../address/address.entity';
 
-export class RestaurantEntity extends BaseEntity<number> {
-    private _addressId: TIdentifier;
+export type RestaurantEntityId = number;
+
+export class RestaurantEntity extends BaseEntity<RestaurantEntityId> {
+    private _addressId: AddressEntityId;
     private _openingTime: Date;
     private _closingTime: Date;
     private _phoneNumber: string;
 
     constructor(
-        addressId: TIdentifier,
+        addressId: AddressEntityId,
         openingTime: Date,
         closingTime: Date,
         phoneNumber: string,
 
-        id?: number,
+        id?: RestaurantEntityId,
     ) {
         super(id);
 

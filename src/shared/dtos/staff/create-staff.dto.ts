@@ -1,20 +1,12 @@
 import {
     IsAlpha,
-    IsEnum,
     IsInt,
     IsNotEmpty,
-    IsNumber,
     IsOptional,
     IsPhoneNumber,
     IsString,
     IsStrongPassword,
 } from 'class-validator';
-import {
-    StaffPositionEntity,
-    StaffPositionEnum,
-} from '../../../domain/entities/staff-position/staff-position.entity';
-import { StaffRoleEnum } from '../../../domain/entities/staff-role/staff-role.entity';
-import { Optional } from '../../../domain/common/common.types';
 
 export class CreateStaffDto {
     @IsNotEmpty()
@@ -41,23 +33,21 @@ export class CreateStaffDto {
     @IsPhoneNumber('RU')
     readonly phoneNumber: string;
 
-    @IsOptional()
-    @IsString()
-    readonly patronymic: Optional<string>;
-
     @IsNotEmpty()
     @IsInt()
-    readonly restaurant_id: number;
+    readonly restaurantId: number;
 
     @IsNotEmpty()
-    @IsEnum(StaffPositionEnum)
-    readonly staff_position: string;
+    readonly staffPositionId: number;
 
     @IsNotEmpty()
-    @IsEnum(StaffRoleEnum)
-    readonly staff_role: string;
+    readonly roleId: number;
 
     @IsOptional()
     @IsString()
-    readonly info: Optional<string>;
+    readonly patronymic?: string;
+
+    @IsOptional()
+    @IsString()
+    readonly info?: string;
 }

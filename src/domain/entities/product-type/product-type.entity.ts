@@ -8,10 +8,12 @@ export const ProductTypeValueEnum = {
     ROLL: 'ROLL',
 } as const;
 
-export class ProductTypeEntity extends BaseEntity<number> {
+export type ProductTypeEntityId = number;
+
+export class ProductTypeEntity extends BaseEntity<ProductTypeEntityId> {
     private _value: string;
 
-    constructor(value: string, id?: number) {
+    constructor(value: string, id?: ProductTypeEntityId) {
         super(id);
         this._value = value;
     }

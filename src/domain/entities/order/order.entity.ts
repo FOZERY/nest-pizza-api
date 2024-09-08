@@ -1,7 +1,9 @@
 import { Nullable, TIdentifier } from '../../common/common.types';
 import { BaseEntity } from '../../common/entity/Base.entity';
 
-export class OrderEntity extends BaseEntity<number> {
+export type OrderEntityId = number;
+
+export class OrderEntity extends BaseEntity<OrderEntityId> {
     private _cashierId: Nullable<TIdentifier>;
     private _restaurantId: Nullable<TIdentifier>;
     private _orderTime: Date;
@@ -26,7 +28,7 @@ export class OrderEntity extends BaseEntity<number> {
         deliveryPrice?: number,
         deliveryRequestedTime?: Date,
         deliveryActualTime?: Date,
-        id?: number,
+        id?: OrderEntityId,
     ) {
         super(id);
 

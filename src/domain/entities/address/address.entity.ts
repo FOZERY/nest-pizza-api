@@ -1,7 +1,9 @@
 import { BaseEntity } from '../../common/entity/Base.entity';
 import { Nullable } from '../../common/common.types';
 
-export class AddressEntity extends BaseEntity<number> {
+export type AddressEntityId = number;
+
+export class AddressEntity extends BaseEntity<AddressEntityId> {
     private _country: string;
     private _region: string;
     private _city: string;
@@ -20,7 +22,7 @@ export class AddressEntity extends BaseEntity<number> {
         postalCode: string,
         apartment?: Nullable<string>,
         block?: Nullable<string>,
-        id?: number,
+        id?: AddressEntityId,
     ) {
         super(id);
 

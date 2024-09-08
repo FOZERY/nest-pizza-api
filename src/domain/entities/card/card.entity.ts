@@ -1,7 +1,9 @@
 import { UserEntity } from '../user/user.entity';
 import { BaseEntity } from '../../common/entity/Base.entity';
 
-export class CardEntity extends BaseEntity<number> {
+export type CardEntityId = number;
+
+export class CardEntity extends BaseEntity<CardEntityId> {
     private _userId: UserEntity;
     private _cardNumber: string;
     private _cardExpiry: Date;
@@ -14,7 +16,7 @@ export class CardEntity extends BaseEntity<number> {
         cardExpiry: Date,
         cardHolderName: string,
         cardType: string,
-        id?: number,
+        id?: CardEntityId,
     ) {
         super(id);
 

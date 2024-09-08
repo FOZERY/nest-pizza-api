@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { InfrastructureModule } from './infrastructure.module';
+import { StaffAuthModule } from './staff-auth.module';
 
 @Module({
     imports: [
@@ -9,6 +10,7 @@ import { InfrastructureModule } from './infrastructure.module';
             isGlobal: true,
         }),
         InfrastructureModule,
+        StaffAuthModule,
     ],
     exports: [],
 })

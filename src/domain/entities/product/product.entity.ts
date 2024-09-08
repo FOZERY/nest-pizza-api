@@ -1,8 +1,11 @@
 import { Nullable, TIdentifier } from '../../common/common.types';
 import { BaseEntity } from '../../common/entity/Base.entity';
+import { ProductTypeEntityId } from '../product-type/product-type.entity';
 
-export class ProductEntity extends BaseEntity<number> {
-    private _productTypeId: TIdentifier;
+export type ProductEntityId = number;
+
+export class ProductEntity extends BaseEntity<ProductEntityId> {
+    private _productTypeId: ProductTypeEntityId;
     private _price: number;
     private _name: string;
     private _isInSlider: boolean;
@@ -10,14 +13,14 @@ export class ProductEntity extends BaseEntity<number> {
     private _description: Nullable<string>;
 
     constructor(
-        productTypeId: TIdentifier,
+        productTypeId: ProductTypeEntityId,
         price: number,
         name: string,
         isInSlider?: boolean,
         imageUrl?: string,
         description?: string,
 
-        id?: number,
+        id?: ProductEntityId,
     ) {
         super(id);
 

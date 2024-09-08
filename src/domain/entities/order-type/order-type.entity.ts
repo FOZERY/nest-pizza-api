@@ -6,10 +6,12 @@ export const OrderTypeEnum = {
     DELIVERY: 'DELIVERY', // Доставка
 } as const;
 
-export class OrderTypeEntity extends BaseEntity<number> {
+export type OrderTypeEntityId = number;
+
+export class OrderTypeEntity extends BaseEntity<OrderTypeEntityId> {
     private _value: string;
 
-    constructor(value: string, id?: number) {
+    constructor(value: string, id?: OrderTypeEntityId) {
         super(id);
         this._value = value;
     }

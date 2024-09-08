@@ -1,14 +1,15 @@
 import { TIdentifier } from '../../common/common.types';
 import { BaseEntity } from '../../common/entity/Base.entity';
+import { IngredientEntityId } from '../ingredient/ingredient.entity';
 
 export class InventoryEntity extends BaseEntity<number> {
     _restaurantId: TIdentifier;
-    _ingredientId: TIdentifier;
+    _ingredientId: IngredientEntityId;
     _quantity: number;
 
     constructor(
         restaurantId: TIdentifier,
-        ingredientId: TIdentifier,
+        ingredientId: IngredientEntityId,
         quantity: number,
         id?: number,
     ) {
