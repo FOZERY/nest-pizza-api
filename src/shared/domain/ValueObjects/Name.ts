@@ -32,11 +32,7 @@ export class Name<TProps extends NameProps> extends ValueObject<TProps> {
         return russianRegex.test(name);
     }
 
-    public static create(name: string) {
-        if (name === null || name === undefined) {
-            throw new Error(NameValidateErrors.RequiredError);
-        }
-
+    protected static validateName(name: string) {
         if (!this.isValidLength(name)) {
             throw new Error(NameValidateErrors.LengthError);
         }
@@ -44,7 +40,23 @@ export class Name<TProps extends NameProps> extends ValueObject<TProps> {
         if (!this.isValidRussianName(name)) {
             throw new Error(NameValidateErrors.RussianSymbolsError);
         }
+    }
 
-        return new Name({ value: upperFirst(name.trim().toLowerCase()) });
+    protected static trimName(name: string) {
+        return name.trim();
+    }
+
+    public static create(name: string) {
+        if (name === null || name === undefined) {
+            throw new Error(NameValidateErrors.RequiredError);
+        }
+
+        const trimmedName = this.trimName(name);
+
+        this.validateName(trimmedName);
+
+        const upperedName = upperFirst(trimmedName.toLowerCase());
+
+        return new Name({ value: upperedName });
     }
 }

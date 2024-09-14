@@ -22,11 +22,11 @@ export class StaffLogin extends ValueObject<StaffLoginProps> {
         return loginRegex.test(login);
     }
 
-    public static create(login: string): StaffLogin {
-        if (login === null || login === undefined) {
-            throw new Error(`Login should be defined`);
-        }
+    private static trimLogin(login: string): string {
+        return login.trim();
+    }
 
+    private static validateLogin(login: string) {
         if (!this.isValidLength(login)) {
             throw new Error(
                 'Login should be more than 4 and less than 20 characters',
@@ -38,7 +38,17 @@ export class StaffLogin extends ValueObject<StaffLoginProps> {
                 'Login should contain only latin characters, "_" and numbers',
             );
         }
+    }
 
-        return new StaffLogin({ value: login });
+    public static create(login: string): StaffLogin {
+        if (login === null || login === undefined) {
+            throw new Error(`Login should be defined`);
+        }
+
+        const trimmedLogin = this.trimLogin(login);
+
+        this.validateLogin(trimmedLogin);
+
+        return new StaffLogin({ value: trimmedLogin });
     }
 }
