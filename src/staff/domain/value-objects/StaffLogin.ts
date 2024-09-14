@@ -13,15 +13,29 @@ export class StaffLogin extends ValueObject<StaffLoginProps> {
         super(props);
     }
 
+    private static isValidLength(login: string): boolean {
+        return login.length >= 4 && login.length <= 100;
+    }
+
+    private static isValidLogin(login: string): boolean {
+        const loginRegex = /^[a-zA-Z0-9_]+$/;
+        return loginRegex.test(login);
+    }
+
     public static create(login: string): StaffLogin {
-        if (
-            login === null ||
-            login === undefined ||
-            login.length <= 4 ||
-            login.length > 20
-        ) {
+        if (login === null || login === undefined) {
+            throw new Error(`Login should be defined`);
+        }
+
+        if (!this.isValidLength(login)) {
             throw new Error(
-                `Login shoul'd be more than 4 and less than 20 symbols`,
+                'Login should be more than 4 and less than 20 characters',
+            );
+        }
+
+        if (!this.isValidLogin(login)) {
+            throw new Error(
+                'Login should contain only latin characters, "_" and numbers',
             );
         }
 

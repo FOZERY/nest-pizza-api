@@ -34,12 +34,14 @@
         "@nestjs/platform-express": "^10.0.0",
         "@nestjs/typeorm": "^10.0.2",
         "@types/lodash.isequal": "^4.5.8",
+        "@types/lodash.upperfirst": "^4.3.9",
         "@types/uuid": "^10.0.0",
         "bcryptjs": "^2.4.3",
         "class-transformer": "^0.5.1",
         "class-validator": "^0.14.1",
         "cross-env": "^7.0.3",
         "lodash.isequal": "^4.5.0",
+        "lodash.upperfirst": "^4.3.1",
         "pg": "^8.12.0",
         "reflect-metadata": "^0.2.0",
         "rxjs": "^7.8.1",
@@ -76,7 +78,10 @@
             "json",
             "ts"
         ],
-        "rootDir": "src",
+        "modulePaths": [
+            "<rootDir>"
+        ],
+        "rootDir": "./",
         "testRegex": ".*\\.spec\\.ts$",
         "transform": {
             "^.+\\.(t|j)s$": "ts-jest"

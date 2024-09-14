@@ -1,5 +1,5 @@
 import { NestFactory } from '@nestjs/core';
-import { RootModule } from './infrastructure/di/root.module';
+import { RootModule } from './root.module';
 
 async function start() {
     const PORT = process.env.PORT || 5000;
