@@ -16,6 +16,10 @@ export abstract class ValueObject<TProps> {
             return false;
         }
 
+        if (!(vo instanceof this.constructor)) {
+            return false;
+        }
+
         return isEqual(vo.props, this.props);
     }
 }
