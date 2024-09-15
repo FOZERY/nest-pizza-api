@@ -1,11 +1,14 @@
+import { Either, left, right } from 'src/shared/core/Either';
 import { ValueObject } from 'src/shared/domain/ValueObject';
+
+type Response = Either<{ message: string }, StaffLogin>;
 
 export interface StaffLoginProps {
     value: string;
 }
 
 export class StaffLogin extends ValueObject<StaffLoginProps> {
-    get value(): string {
+    public get value(): string {
         return this.props.value;
     }
 
@@ -26,29 +29,32 @@ export class StaffLogin extends ValueObject<StaffLoginProps> {
         return login.trim();
     }
 
-    private static validateLogin(login: string) {
+    private static validateLogin(login: string): Response {
         if (!this.isValidLength(login)) {
-            throw new Error(
-                'Login should be more than 4 and less than 20 characters',
-            );
+            return left({ message: 'Error' });
         }
 
         if (!this.isValidLogin(login)) {
-            throw new Error(
-                'Login should contain only latin characters, "_" and numbers',
-            );
+            return left({
+                message:
+                    'Login should contain only latin characters, "_" and numbers',
+            });
         }
     }
 
-    public static create(login: string): StaffLogin {
+    public static create(login: string): Response {
         if (login === null || login === undefined) {
             throw new Error(`Login should be defined`);
         }
 
         const trimmedLogin = this.trimLogin(login);
 
-        this.validateLogin(trimmedLogin);
+        const validationResult = this.validateLogin(trimmedLogin);
 
-        return new StaffLogin({ value: trimmedLogin });
+        if (validationResult.isLeft()) {
+            return left(validationResult.value);
+        }
+
+        return right(new StaffLogin({ value: trimmedLogin }));
     }
 }

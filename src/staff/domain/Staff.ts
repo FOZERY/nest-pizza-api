@@ -1,12 +1,12 @@
 import { Entity } from 'src/shared/domain/Entity';
 import { UniqueID } from 'src/shared/domain/UniqueID';
-import { StaffLogin } from './value-objects/StaffLogin';
-import { StaffPassword } from './value-objects/StaffPassword';
-import { StaffFirstName } from './value-objects/StaffFirstName';
-import { StaffLastName } from './value-objects/StaffLastName';
 import { Phone } from '../../shared/domain/ValueObjects/Phone';
 import { StaffPosition } from './StaffPosition';
 import { StaffRole } from './StaffRole';
+import { StaffFirstName } from './value-objects/StaffFirstName';
+import { StaffLastName } from './value-objects/StaffLastName';
+import { StaffLogin } from './value-objects/StaffLogin';
+import { StaffPassword } from './value-objects/StaffPassword';
 
 export interface StaffProps {
     login: StaffLogin;
