@@ -4,7 +4,7 @@ export interface PhoneProps {
     value: string;
 }
 
-export class Phone extends ValueObject<PhoneProps> {
+export class Phone extends ValueObject {
     private static phoneRegex: RegExp = /^(?:\+7|7|8)\d{10}$/;
 
     get value(): string {

@@ -1,18 +1,10 @@
 import { isEqual } from 'lodash';
 
-export abstract class ValueObject<TProps> {
-    protected readonly props: TProps;
+export abstract class ValueObject {
+    protected constructor() {}
 
-    protected constructor(props: TProps) {
-        this.props = Object.freeze(props);
-    }
-
-    public equals(vo?: ValueObject<TProps>): boolean {
+    public equals(vo?: ValueObject): boolean {
         if (vo === null || vo === undefined) {
-            return false;
-        }
-
-        if (vo.props === undefined) {
             return false;
         }
 
@@ -20,6 +12,6 @@ export abstract class ValueObject<TProps> {
             return false;
         }
 
-        return isEqual(vo.props, this.props);
+        return isEqual(vo, this);
     }
 }
