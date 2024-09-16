@@ -33,6 +33,7 @@
         "@nestjs/jwt": "^10.2.0",
         "@nestjs/platform-express": "^10.0.0",
         "@nestjs/typeorm": "^10.0.2",
+        "@sweet-monads/either": "^3.3.1",
         "@types/lodash.isequal": "^4.5.8",
         "@types/lodash.upperfirst": "^4.3.9",
         "@types/uuid": "^10.0.0",

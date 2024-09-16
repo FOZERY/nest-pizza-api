@@ -1,13 +1,17 @@
 import { Either, left, right } from 'src/shared/core/Either';
 import { ValueObject } from 'src/shared/domain/ValueObject';
-
-type Response = Either<{ message: string }, StaffLogin>;
+import { StaffErrors } from '../errors/StaffErrors';
+import { Guard } from '../../../shared/core/Guard';
+import StaffError = StaffErrors.StaffError;
 
 export interface StaffLoginProps {
     value: string;
 }
 
 export class StaffLogin extends ValueObject<StaffLoginProps> {
+    private static minLength = 4;
+    private static maxLength = 100;
+
     public get value(): string {
         return this.props.value;
     }
@@ -29,30 +33,36 @@ export class StaffLogin extends ValueObject<StaffLoginProps> {
         return login.trim();
     }
 
-    private static validateLogin(login: string): Response {
+    private static validateLogin(login: string): Either<StaffError, null> {
         if (!this.isValidLength(login)) {
-            return left({ message: 'Error' });
+            return left(
+                new StaffErrors.InvalidLoginLengthError(
+                    this.minLength,
+                    this.maxLength,
+                ),
+            );
         }
 
         if (!this.isValidLogin(login)) {
-            return left({
-                message:
-                    'Login should contain only latin characters, "_" and numbers',
-            });
+            return left(new StaffErrors.InvalidLoginFormatError());
         }
+
+        return right(null);
     }
 
-    public static create(login: string): Response {
-        if (login === null || login === undefined) {
-            throw new Error(`Login should be defined`);
+    public static create(login: string): Either<StaffError, StaffLogin> {
+        const loginResult = Guard.notNullOrUndefined(login, 'login');
+
+        if (loginResult.isLeft()) {
+            return left(loginResult.value);
         }
 
         const trimmedLogin = this.trimLogin(login);
 
-        const validationResult = this.validateLogin(trimmedLogin);
+        const validationResultOrFail = this.validateLogin(trimmedLogin);
 
-        if (validationResult.isLeft()) {
-            return left(validationResult.value);
+        if (validationResultOrFail.isLeft()) {
+            return left(validationResultOrFail.value);
         }
 
         return right(new StaffLogin({ value: trimmedLogin }));

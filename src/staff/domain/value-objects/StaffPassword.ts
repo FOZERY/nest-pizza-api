@@ -1,30 +1,60 @@
 import { ValueObject } from '../../../shared/domain/ValueObject';
 import * as bcrypt from 'bcryptjs';
+import { Either, left, right } from '@sweet-monads/either';
+import { Errors } from '../../../shared/core/Errors';
+import { Guard } from '../../../shared/core/Guard';
+import { StaffErrors } from '../errors/StaffErrors';
 
-export interface StaffPasswordProps {
-    value: string;
-    hashed?: boolean;
-}
+export class StaffPassword extends ValueObject {
+    public readonly password: string;
+    public readonly hashed?: boolean;
 
-export enum PasswordErrors {
-    InitializeCheck = 'Пароль не должен быть undefined или null',
-    LatinCharactersCheck = 'Пароль может содержать только латинские буквы',
-    StrongPasswordCheck = 'Пароль должен быть строгим (Содежрать маленькие и большие латинские буквы, цифры и нижние подчеркивания)',
-    LengthCheck = 'Пароль должен быть не меньше 6 символов и не больше 100 символов',
-    NotRepeatedCharacters = 'Символы пароля не должны повторяться более чем 3 раза подряд',
-}
-
-export class StaffPassword extends ValueObject<StaffPasswordProps> {
     private static readonly minLength: number = 6;
     private static readonly maxLength: number = 100;
+
     private readonly salt_rounds: number = 10;
 
-    get value() {
-        return this.props.value;
+    private constructor(password: string, hashed?: boolean) {
+        super();
+        this.password = password;
+        this.hashed = hashed;
     }
 
-    private constructor(props: StaffPasswordProps) {
-        super(props);
+    public static create(
+        password: string,
+        hashed?: boolean,
+    ): Either<
+        | Errors.General.AgainstNullOrUndefined
+        | Errors.General.InvalidValueLength
+        | StaffErrors.NotLatinCharactersError
+        | StaffErrors.WeakPasswordError,
+        StaffPassword
+    > {
+        if (!Guard.notNullOrUndefined(password, 'password')) {
+            return left(
+                Errors.General.AgainstNullOrUndefined.create('password'),
+            );
+        }
+
+        const trimmedPassword = this.trimPassword(password);
+
+        if (!this.isContainOnlyLatinCharacters(trimmedPassword)) {
+            return left(StaffErrors.NotLatinCharactersError.create());
+        }
+
+        if (!this.isValidLength(trimmedPassword)) {
+            return left(Errors.General.InvalidValueLength.create('password'));
+        }
+
+        if (!this.isStrongPassword(password)) {
+            return left(StaffErrors.WeakPasswordError.create());
+        }
+
+        return right(new StaffPassword(trimmedPassword, hashed));
+    }
+
+    private static trimPassword(password: string) {
+        return password.trim();
     }
 
     private static isValidLength(password: string): boolean {
@@ -32,10 +62,6 @@ export class StaffPassword extends ValueObject<StaffPasswordProps> {
             password.length >= this.minLength &&
             password.length <= this.maxLength
         );
-    }
-
-    private static trimPassword(password: string) {
-        return password.trim();
     }
 
     private static isStrongPassword(password: string): boolean {
@@ -53,63 +79,34 @@ export class StaffPassword extends ValueObject<StaffPasswordProps> {
         return !repeatedCharsRegex.test(password);
     }
 
-    private static validatePassword(password: string) {
-        if (!this.isValidLength(password)) {
-            throw new Error(PasswordErrors.LengthCheck);
-        }
-
-        if (!this.isContainOnlyLatinCharacters(password)) {
-            throw new Error(PasswordErrors.LatinCharactersCheck);
-        }
-
-        if (!this.isStrongPassword(password)) {
-            throw new Error(PasswordErrors.StrongPasswordCheck);
-        }
-
-        if (!this.isNotRepeatedCharacters(password)) {
-            throw new Error(PasswordErrors.NotRepeatedCharacters);
-        }
-    }
-
     public isAlreadyHashed(): boolean {
-        return !!this.props.hashed;
+        return !!this.hashed;
     }
 
-    private async hashPassword(password: string): Promise<string> {
+    private async hashPassword(
+        password: string,
+    ): Promise<Either<unknown, string>> {
         try {
             const hash = await bcrypt.hash(password, this.salt_rounds);
-            return hash;
+            return right(hash);
         } catch (err) {
-            throw err;
+            return left(err);
         }
     }
 
-    public async getHashedValue() {
-        try {
-            if (this.isAlreadyHashed()) {
-                return this.props.value;
+    public async getHashedValue(): Promise<Either<unknown, string>> {
+        if (this.isAlreadyHashed()) {
+            return right(this.password);
+        } else {
+            const hashedPasswordOrFailure = await this.hashPassword(
+                this.password,
+            );
+
+            if (hashedPasswordOrFailure.isLeft()) {
+                return left(hashedPasswordOrFailure.value);
             } else {
-                return await this.hashPassword(this.props.value);
+                return right(hashedPasswordOrFailure.value);
             }
-        } catch (err) {
-            throw err;
         }
-    }
-
-    public static create(props: StaffPasswordProps): StaffPassword {
-        if (!props || !props.value) {
-            throw new Error(PasswordErrors.InitializeCheck);
-        }
-
-        const trimmedPassword = this.trimPassword(props.value);
-
-        if (!props.hashed) {
-            this.validatePassword(trimmedPassword);
-        }
-
-        return new StaffPassword({
-            value: trimmedPassword,
-            hashed: !!props.hashed,
-        });
     }
 }
