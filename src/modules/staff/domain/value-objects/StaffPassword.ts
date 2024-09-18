@@ -1,8 +1,8 @@
-import { ValueObject } from '../../../shared/domain/ValueObject';
-import * as bcrypt from 'bcryptjs';
 import { Either, left, right } from '@sweet-monads/either';
-import { Errors } from '../../../shared/core/Errors';
-import { Guard } from '../../../shared/core/Guard';
+import * as bcrypt from 'bcryptjs';
+import { Guard } from 'src/shared/core/Guard';
+import { GeneralErrors } from 'src/shared/domain/GeneralErrors';
+import { ValueObject } from 'src/shared/domain/ValueObject';
 import { StaffErrors } from '../errors/StaffErrors';
 
 export class StaffPassword extends ValueObject {
@@ -24,30 +24,21 @@ export class StaffPassword extends ValueObject {
         password: string,
         hashed?: boolean,
     ): Either<
-        | Errors.General.AgainstNullOrUndefined
-        | Errors.General.InvalidValueLength
+        | GeneralErrors.NullOrUndefinedValue
+        | StaffErrors.WeakPasswordError
         | StaffErrors.NotLatinCharactersError
-        | StaffErrors.WeakPasswordError,
+        | GeneralErrors.InvalidLength
+        | GeneralErrors.InvalidValue,
         StaffPassword
     > {
-        if (!Guard.notNullOrUndefined(password, 'password')) {
-            return left(
-                Errors.General.AgainstNullOrUndefined.create('password'),
-            );
+        if (!Guard.notNullOrUndefined(password)) {
+            return left(GeneralErrors.NullOrUndefinedValue.create('password'));
         }
 
         const trimmedPassword = this.trimPassword(password);
 
-        if (!this.isContainOnlyLatinCharacters(trimmedPassword)) {
-            return left(StaffErrors.NotLatinCharactersError.create());
-        }
-
         if (!this.isValidLength(trimmedPassword)) {
-            return left(Errors.General.InvalidValueLength.create('password'));
-        }
-
-        if (!this.isStrongPassword(password)) {
-            return left(StaffErrors.WeakPasswordError.create());
+            return left(GeneralErrors.InvalidLength.create('password'));
         }
 
         return right(new StaffPassword(trimmedPassword, hashed));

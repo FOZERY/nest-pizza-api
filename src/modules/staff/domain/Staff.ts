@@ -1,21 +1,18 @@
+import { left, right } from '@sweet-monads/either';
 import { Entity } from 'src/shared/domain/Entity';
+import { GeneralErrors } from 'src/shared/domain/GeneralErrors';
 import { UniqueID } from 'src/shared/domain/UniqueID';
-import { Phone } from '../../shared/domain/ValueObjects/Phone';
 import { StaffPosition } from './StaffPosition';
 import { StaffRole } from './StaffRole';
-import { StaffFirstName } from './value-objects/StaffFirstName';
-import { StaffLastName } from './value-objects/StaffLastName';
 import { StaffLogin } from './value-objects/StaffLogin';
 import { StaffPassword } from './value-objects/StaffPassword';
-import { Either, left, right } from '@sweet-monads/either';
-import { Errors } from 'src/shared/core/Errors';
 
 export interface StaffProps {
     login: StaffLogin;
     password: StaffPassword;
-    firstName: StaffFirstName;
-    lastName: StaffLastName;
-    phoneNumber: Phone;
+    firstName: string;
+    lastName: string;
+    phoneNumber: string;
     restaurantId: string;
     role: StaffRole;
     position: StaffPosition;
@@ -29,12 +26,11 @@ export class Staff extends Entity<StaffProps> {
         super(props, id);
     }
 
-    public static create(
-        props: StaffProps,
-        id?: StaffID,
-    ): Either<Errors.General.AgainstNullOrUndefined, Staff> {
+    public static create(props: StaffProps, id?: StaffID) {
         if (props === undefined || props === null) {
-            return left(Errors.General.AgainstNullOrUndefined.create());
+            return left(
+                GeneralErrors.NullOrUndefinedValue.create('Staff properties'),
+            );
         }
 
         return right(new Staff(props, id));
